@@ -115,6 +115,36 @@ function Rating({ value }: { value: number }) {
   );
 }
 
+function fallbackCoverStyle(title: string) {
+  const text = title.toLowerCase();
+  if (/vogue|fashion|giger|art of/.test(text)) return "fashion";
+  if (/magic|occult|tarot|mesmer|esotericism|moonchild/.test(text)) return "occult";
+  if (/math|physics|quantum|science|density|tripos|feynman|singularity/.test(text)) return "science";
+  if (/philosophy|logic|theory|schlick|kuhn|positivism/.test(text)) return "philosophy";
+  if (/starcraft|runescape|world of warcraft|manga|death note/.test(text)) return "game";
+  return "literature";
+}
+
+function BookCover({ book }: { book: (typeof books)[number] }) {
+  const cover = bookCovers[book.id];
+  if (cover) {
+    return (
+      <img
+        alt={`${book.title} cover`}
+        loading="lazy"
+        src={cover}
+        onError={(event) => { event.currentTarget.classList.add("poster-missing"); }}
+      />
+    );
+  }
+  return (
+    <div className={`book-fallback ${fallbackCoverStyle(book.title)}`} role="img" aria-label={`Custom cover for ${book.title}`}>
+      <span>{book.title}</span>
+      <small>{book.author}</small>
+    </div>
+  );
+}
+
 function TvPage() {
   const [sort, setSort] = useState<"chronology" | "rating">("rating");
   const [direction, setDirection] = useState<"asc" | "desc">("desc");
@@ -207,12 +237,7 @@ function BookshelfPage() {
       <section className="show-grid" aria-label="Bookshelf">
         {sortedBooks.map((book) => (
           <article className="show-card" key={book.id}>
-            <img
-              alt={`${book.title} cover`}
-              loading="lazy"
-              src={bookCovers[book.id]}
-              onError={(event) => { event.currentTarget.classList.add("poster-missing"); }}
-            />
+            <BookCover book={book} />
             <div className="show-meta">
               <p className="book-author">{book.author}</p>
               <h2>{book.title}</h2>

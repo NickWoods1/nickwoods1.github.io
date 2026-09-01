@@ -218,6 +218,51 @@ a {
 
 .show-card img.poster-missing { opacity: 0.28; }
 
+.book-fallback {
+  align-items: flex-start;
+  aspect-ratio: 2 / 3;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.32);
+  color: #f5f1e8;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 10%;
+  position: relative;
+}
+
+.book-fallback::before {
+  border: 1px solid currentColor;
+  content: "";
+  inset: 7%;
+  opacity: 0.45;
+  position: absolute;
+}
+
+.book-fallback span,
+.book-fallback small { position: relative; z-index: 1; }
+
+.book-fallback span {
+  font-family: Georgia, serif;
+  font-size: clamp(0.88rem, 1.5vw, 1.28rem);
+  font-weight: 700;
+  line-height: 1.04;
+}
+
+.book-fallback small {
+  font-size: 0.63rem;
+  letter-spacing: 0.06em;
+  margin-top: 0.6rem;
+  text-transform: uppercase;
+}
+
+.book-fallback.literature { background: linear-gradient(145deg, #34221c, #8a492c 52%, #241613); }
+.book-fallback.science { background: linear-gradient(140deg, #071a36, #18568c 52%, #0b1c3d); }
+.book-fallback.philosophy { background: linear-gradient(140deg, #443a23, #a8863d 52%, #332b19); }
+.book-fallback.occult { background: linear-gradient(145deg, #241130, #783c78 52%, #17091f); }
+.book-fallback.fashion { background: linear-gradient(145deg, #30111e, #c12867 52%, #1d0b15); }
+.book-fallback.game { background: linear-gradient(145deg, #102a27, #24856d 52%, #071b18); }
+
 .show-meta { padding-top: 0.7rem; }
 
 .show-meta time { display: block; font-size: 0.68rem; letter-spacing: 0.05em; }
