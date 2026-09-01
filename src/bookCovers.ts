@@ -333,5 +333,15 @@ export const bookCovers: Record<number, string> = {
   "368": "https://covers.openlibrary.org/b/id/9326271-M.jpg",
   "369": "https://covers.openlibrary.org/b/id/6519840-M.jpg",
   "370": "https://covers.openlibrary.org/b/id/39754-M.jpg",
-  "371": "https://covers.openlibrary.org/b/id/767648-M.jpg"
+  "371": "https://covers.openlibrary.org/b/id/767648-M.jpg",
+  "372": "https://covers.openlibrary.org/b/id/8054401-M.jpg",
+  "373": "https://covers.openlibrary.org/b/id/283860-M.jpg",
+  "374": "https://covers.openlibrary.org/b/id/15155833-M.jpg",
+  "375": "https://covers.openlibrary.org/b/id/15158664-M.jpg",
+  "376": "https://covers.openlibrary.org/b/id/10580435-M.jpg",
+  "377": "https://covers.openlibrary.org/b/id/12059372-M.jpg",
+  "378": "https://covers.openlibrary.org/b/id/15158666-M.jpg",
+  "379": "https://covers.openlibrary.org/b/id/10716273-M.jpg",
+  "380": "https://covers.openlibrary.org/b/id/15158660-M.jpg",
+  "381": "https://covers.openlibrary.org/b/id/7255974-M.jpg"
 };

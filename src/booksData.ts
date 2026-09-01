@@ -377,6 +377,16 @@ HR Giger — Hans Werner Holzwarth (ed.)
 Juliette — Marquis de Sade
 The Crying of Lot 49 — Thomas Pynchon
 Venus in Furs — Leopold von Sacher-Masoch
+The Idiot — Fyodor Dostoyevsky
+Neuromancer — William Gibson
+Harry Potter and the Philosopher’s Stone — J. K. Rowling
+Harry Potter and the Chamber of Secrets — J. K. Rowling
+Harry Potter and the Prisoner of Azkaban — J. K. Rowling
+Harry Potter and the Goblet of Fire — J. K. Rowling
+Harry Potter and the Order of the Phoenix — J. K. Rowling
+Harry Potter and the Half-Blood Prince — J. K. Rowling
+Harry Potter and the Deathly Hallows — J. K. Rowling
+The Bad Beginning — Lemony Snicket
 `.trim();
 
 export const books: Book[] = rawBooks.split("\n").map((entry, index) => {
