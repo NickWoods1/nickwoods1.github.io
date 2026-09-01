@@ -168,6 +168,19 @@ function TvPage() {
   );
 }
 
+function BookshelfPage() {
+  return (
+    <main className="tv-page">
+      <section className="tv-intro">
+        <div className="tv-title-row">
+          <h1>bookshelf</h1>
+          <span>0 entries</span>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function App() {
   const canvasRef = useLifeCanvas();
   const [page, setPage] = useState(() => window.location.hash);
@@ -179,6 +192,7 @@ function App() {
   }, []);
 
   if (page === "#tv") return <TvPage />;
+  if (page === "#books") return <BookshelfPage />;
 
   return (
     <main className="site">
@@ -204,6 +218,9 @@ function App() {
         </a>
         <a href="#tv">
           ./letterboxd_tv
+        </a>
+        <a href="#books">
+          ./bookshelf
         </a>
       </nav>
     </main>
