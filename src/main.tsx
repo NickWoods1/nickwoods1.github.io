@@ -214,13 +214,13 @@ function App() {
           ./linkedin
         </a>
         <a href="https://letterboxd.com/nicktsmitw/" target="_blank" rel="noreferrer">
-          ./letterboxd
+          ./films
         </a>
         <a href="#tv">
-          ./letterboxd_tv
+          ./tv
         </a>
         <a href="#books">
-          ./bookshelf
+          ./books
         </a>
       </nav>
     </main>
