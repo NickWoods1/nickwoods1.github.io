@@ -114,8 +114,8 @@ function Rating({ value }: { value: number }) {
 }
 
 function TvPage() {
-  const [sort, setSort] = useState<"chronology" | "rating">("chronology");
-  const [direction, setDirection] = useState<"asc" | "desc">("asc");
+  const [sort, setSort] = useState<"chronology" | "rating">("rating");
+  const [direction, setDirection] = useState<"asc" | "desc">("desc");
   const selectSort = (nextSort: "chronology" | "rating") => {
     if (nextSort === sort) {
       setDirection(direction === "asc" ? "desc" : "asc");
