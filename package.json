@@ -7,6 +7,8 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
+    "tv:rate": "node scripts/tv-rate.mjs",
+    "tv:publish": "git add src/tvData.ts && git commit -m \"Update TV diary ratings\" && git push origin main && npm run deploy",
     "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
