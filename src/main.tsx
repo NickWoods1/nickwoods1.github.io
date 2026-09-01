@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
+import { tvShows } from "./tvData";
 
 const glyphs = "01#$%&*+-/:;<=>?@[]{}~";
 
@@ -99,8 +100,85 @@ function useLifeCanvas() {
   return canvasRef;
 }
 
+function Rating({ value }: { value: number }) {
+  return (
+    <div className="rating" aria-label={`${value} out of 5 stars`}>
+      {[1, 2, 3, 4, 5].map((star) => {
+        const fill = value >= star ? "full" : value === star - 0.5 ? "half" : "empty";
+        return (
+          <span className={fill} key={star}>★</span>
+        );
+      })}
+    </div>
+  );
+}
+
+function TvPage() {
+  const [sort, setSort] = useState<"chronology" | "rating">("chronology");
+  const [direction, setDirection] = useState<"asc" | "desc">("asc");
+  const selectSort = (nextSort: "chronology" | "rating") => {
+    if (nextSort === sort) {
+      setDirection(direction === "asc" ? "desc" : "asc");
+      return;
+    }
+    setSort(nextSort);
+    setDirection(nextSort === "rating" ? "desc" : "asc");
+  };
+  const shows = [...tvShows].sort((first, second) =>
+    sort === "rating"
+      ? ((second.rating ?? -1) - (first.rating ?? -1) || first.watchedOn.localeCompare(second.watchedOn)) * (direction === "asc" ? -1 : 1)
+      : first.watchedOn.localeCompare(second.watchedOn) * (direction === "asc" ? 1 : -1),
+  );
+
+  return (
+    <main className="tv-page">
+      <section className="tv-intro">
+        <div className="tv-title-row">
+          <h1>television</h1>
+          <span>{tvShows.length} entries</span>
+        </div>
+        <div className="sort-controls" aria-label="Sort entries">
+          <span>sort:</span>
+          <button className={sort === "chronology" ? "active" : ""} onClick={() => selectSort("chronology")}>
+            chronology {sort === "chronology" ? (direction === "asc" ? "↑" : "↓") : ""}
+          </button>
+          <button className={sort === "rating" ? "active" : ""} onClick={() => selectSort("rating")}>
+            rating {sort === "rating" ? (direction === "asc" ? "↑" : "↓") : ""}
+          </button>
+        </div>
+      </section>
+      <section className="show-grid" aria-label="TV watch diary">
+        {shows.map((show) => (
+          <article className="show-card" key={show.id}>
+            <img
+              alt={`${show.title} poster`}
+              loading="lazy"
+              src={`/posters/${show.id}.jpg`}
+              onError={(event) => { event.currentTarget.classList.add("poster-missing"); }}
+            />
+            <div className="show-meta">
+              <time dateTime={show.watchedOn}>{show.watchedOn}</time>
+              <h2>{show.title}</h2>
+              {show.rating === null ? <span className="not-rated">Not rated</span> : <Rating value={show.rating} />}
+            </div>
+          </article>
+        ))}
+      </section>
+    </main>
+  );
+}
+
 function App() {
   const canvasRef = useLifeCanvas();
+  const [page, setPage] = useState(() => window.location.hash);
+
+  useEffect(() => {
+    const updatePage = () => setPage(window.location.hash);
+    window.addEventListener("hashchange", updatePage);
+    return () => window.removeEventListener("hashchange", updatePage);
+  }, []);
+
+  if (page === "#tv") return <TvPage />;
 
   return (
     <main className="site">
@@ -124,8 +202,8 @@ function App() {
         <a href="https://letterboxd.com/nicktsmitw/" target="_blank" rel="noreferrer">
           ./letterboxd
         </a>
-        <a href="#tv-letterboxd" aria-disabled="true" title="Coming soon">
-          ./letterboxd_tv [soon]
+        <a href="#tv">
+          ./letterboxd_tv
         </a>
       </nav>
     </main>
