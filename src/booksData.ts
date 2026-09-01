@@ -387,6 +387,12 @@ Harry Potter and the Order of the Phoenix — J. K. Rowling
 Harry Potter and the Half-Blood Prince — J. K. Rowling
 Harry Potter and the Deathly Hallows — J. K. Rowling
 The Bad Beginning — Lemony Snicket
+The Incal: The Deluxe Edition — Alejandro Jodorowsky & Mœbius
+The Art of The Lord of the Rings — J.R.R. Tolkien
+The Fantastic: Gustave Doré — Gustave Doré
+RuneScape: The First 20 Years — author/editor unclear
+The Art of World of Warcraft — author/editor unclear
+Soul Arts — author/editor unclear
 `.trim();
 
 export const books: Book[] = rawBooks.split("\n").map((entry, index) => {
