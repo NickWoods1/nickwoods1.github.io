@@ -16,7 +16,13 @@ for (const [index, book] of books.entries()) {
       headers: { "user-agent": "nickwoods1.github.io bookshelf cover lookup" },
     });
     const result = await search.json();
-    const cover = result.docs?.[0]?.cover_i;
+    let cover = result.docs?.[0]?.cover_i;
+    if (!cover) {
+      const fallback = await fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(book.title)}&limit=1&fields=cover_i`, {
+        headers: { "user-agent": "nickwoods1.github.io bookshelf cover lookup" },
+      });
+      cover = (await fallback.json()).docs?.[0]?.cover_i;
+    }
     if (!cover) throw new Error("no cover found");
     covers[index + 1] = `https://covers.openlibrary.org/b/id/${cover}-M.jpg`;
     console.error(`${index + 1}/${books.length} ${book.title}`);
