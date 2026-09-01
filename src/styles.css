@@ -231,6 +231,13 @@ a {
   margin: 0.22rem 0 0.4rem;
 }
 
+.book-author {
+  color: #9aa5b1;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  margin: 0 0 0.28rem;
+}
+
 .rating { display: flex; gap: 1px; }
 
 .rating span {

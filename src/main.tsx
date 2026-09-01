@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
+import { books } from "./booksData";
+import { bookCovers } from "./bookCovers";
 import { tvShows } from "./tvData";
 
 const glyphs = "01#$%&*+-/:;<=>?@[]{}~";
@@ -169,13 +171,55 @@ function TvPage() {
 }
 
 function BookshelfPage() {
+  const [sort, setSort] = useState<"chronology" | "rating">("chronology");
+  const [direction, setDirection] = useState<"asc" | "desc">("asc");
+  const selectSort = (nextSort: "chronology" | "rating") => {
+    if (nextSort === sort) {
+      setDirection(direction === "asc" ? "desc" : "asc");
+      return;
+    }
+    setSort(nextSort);
+    setDirection(nextSort === "rating" ? "desc" : "asc");
+  };
+  const sortedBooks = [...books].sort((first, second) =>
+    sort === "rating"
+      ? ((second.rating ?? -1) - (first.rating ?? -1) || first.id - second.id) * (direction === "asc" ? -1 : 1)
+      : (first.id - second.id) * (direction === "asc" ? 1 : -1),
+  );
+
   return (
     <main className="tv-page">
       <section className="tv-intro">
         <div className="tv-title-row">
           <h1>bookshelf</h1>
-          <span>0 entries</span>
+          <span>{books.length} entries</span>
         </div>
+        <div className="sort-controls" aria-label="Sort books">
+          <span>sort:</span>
+          <button className={sort === "chronology" ? "active" : ""} onClick={() => selectSort("chronology")}>
+            order {sort === "chronology" ? (direction === "asc" ? "↑" : "↓") : ""}
+          </button>
+          <button className={sort === "rating" ? "active" : ""} onClick={() => selectSort("rating")}>
+            rating {sort === "rating" ? (direction === "asc" ? "↑" : "↓") : ""}
+          </button>
+        </div>
+      </section>
+      <section className="show-grid" aria-label="Bookshelf">
+        {sortedBooks.map((book) => (
+          <article className="show-card" key={book.id}>
+            <img
+              alt={`${book.title} cover`}
+              loading="lazy"
+              src={bookCovers[book.id]}
+              onError={(event) => { event.currentTarget.classList.add("poster-missing"); }}
+            />
+            <div className="show-meta">
+              <p className="book-author">{book.author}</p>
+              <h2>{book.title}</h2>
+              <span className="not-rated">Not rated</span>
+            </div>
+          </article>
+        ))}
       </section>
     </main>
   );
