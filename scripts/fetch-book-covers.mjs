@@ -6,9 +6,12 @@ const books = raw.split("\n").map((entry) => {
   const separator = entry.lastIndexOf(" — ");
   return { title: entry.slice(0, separator), author: entry.slice(separator + 3) };
 });
-const covers = {};
+const coverFile = new URL("../src/bookCovers.ts", import.meta.url);
+const coverSource = await readFile(coverFile, "utf8");
+const covers = JSON.parse(coverSource.match(/= (\{[\s\S]*\});/)[1]);
 
 for (const [index, book] of books.entries()) {
+  if (covers[index + 1]) continue;
   try {
     const author = book.author.replace(/^(edited by|translated by) /, "").split(/[,&]/)[0];
     const query = `title:"${book.title}" author:"${author}"`;
@@ -31,6 +34,5 @@ for (const [index, book] of books.entries()) {
   }
   await new Promise((resolve) => setTimeout(resolve, 400));
 }
-const output = new URL("../src/bookCovers.ts", import.meta.url);
-await writeFile(output, `export const bookCovers: Record<number, string> = ${JSON.stringify(covers, null, 2)};\n`);
+await writeFile(coverFile, `export const bookCovers: Record<number, string> = ${JSON.stringify(covers, null, 2)};\n`);
 console.log(`Saved ${Object.keys(covers).length}/${books.length} cover links.`);
