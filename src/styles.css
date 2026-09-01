@@ -91,6 +91,48 @@ a {
   width: 0.55em;
 }
 
+.link-dock {
+  bottom: clamp(1.25rem, 4vw, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  left: 50%;
+  max-width: calc(100% - 2rem);
+  position: fixed;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.link-dock a {
+  background: rgba(0, 0, 0, 0.72);
+  border: 1px solid rgba(34, 255, 102, 0.76);
+  box-shadow: 0 0 12px rgba(34, 255, 102, 0.18);
+  color: #c9ffc9;
+  font-size: clamp(0.72rem, 1.5vw, 0.9rem);
+  padding: 0.48rem 0.65rem;
+}
+
+.link-dock a:hover,
+.link-dock a:focus-visible {
+  background: #22ff66;
+  box-shadow: 0 0 18px rgba(34, 255, 102, 0.68);
+  color: #000;
+  outline: none;
+}
+
+.link-dock a[aria-disabled="true"] {
+  color: #79a683;
+  cursor: not-allowed;
+}
+
+.link-dock a[aria-disabled="true"]:hover,
+.link-dock a[aria-disabled="true"]:focus-visible {
+  background: rgba(0, 0, 0, 0.72);
+  box-shadow: 0 0 12px rgba(34, 255, 102, 0.18);
+  color: #79a683;
+}
+
 @keyframes blink {
   50% {
     opacity: 0;

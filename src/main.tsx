@@ -110,6 +110,24 @@ function App() {
       <h1 className="prompt" aria-label="nickwoods at home prompt">
         nickwoods@home:-$<span className="cursor" aria-hidden="true" />
       </h1>
+      <nav className="link-dock" aria-label="Elsewhere">
+        <a href="https://github.com/NickWoods1" target="_blank" rel="noreferrer">
+          ./github
+        </a>
+        <a
+          href="https://uk.linkedin.com/in/nick-woods-6431588a"
+          target="_blank"
+          rel="noreferrer"
+        >
+          ./linkedin
+        </a>
+        <a href="https://letterboxd.com/nicktsmitw/" target="_blank" rel="noreferrer">
+          ./letterboxd
+        </a>
+        <a href="#tv-letterboxd" aria-disabled="true" title="Coming soon">
+          ./letterboxd_tv [soon]
+        </a>
+      </nav>
     </main>
   );
 }
