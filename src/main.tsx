@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./styles.css";
 import { books } from "./booksData";
 import { bookCovers } from "./bookCovers";
+import { movies } from "./movieData";
 import { tvShows } from "./tvData";
 
 const glyphs = "01#$%&*+-/:;<=>?@[]{}~";
@@ -200,6 +201,61 @@ function TvPage() {
   );
 }
 
+function PlexPage() {
+  const [sort, setSort] = useState<"library" | "rating">("library");
+  const [direction, setDirection] = useState<"asc" | "desc">("asc");
+  const selectSort = (nextSort: "library" | "rating") => {
+    if (nextSort === sort) {
+      setDirection(direction === "asc" ? "desc" : "asc");
+      return;
+    }
+    setSort(nextSort);
+    setDirection(nextSort === "rating" ? "desc" : "asc");
+  };
+  const library = [...movies].sort((first, second) =>
+    sort === "rating"
+      ? ((second.rating ?? -1) - (first.rating ?? -1) || first.title.localeCompare(second.title)) * (direction === "asc" ? -1 : 1)
+      : first.title.localeCompare(second.title) * (direction === "asc" ? 1 : -1),
+  );
+
+  return (
+    <main className="tv-page">
+      <section className="tv-intro">
+        <div className="tv-title-row">
+          <h1>plex library</h1>
+          <span>{movies.length} films</span>
+        </div>
+        <div className="sort-controls" aria-label="Sort films">
+          <span>sort:</span>
+          <button className={sort === "library" ? "active" : ""} onClick={() => selectSort("library")}>
+            title {sort === "library" ? (direction === "asc" ? "↑" : "↓") : ""}
+          </button>
+          <button className={sort === "rating" ? "active" : ""} onClick={() => selectSort("rating")}>
+            rating {sort === "rating" ? (direction === "asc" ? "↑" : "↓") : ""}
+          </button>
+        </div>
+      </section>
+      <section className="show-grid" aria-label="Plex film library">
+        {library.map((movie) => (
+          <article className="show-card" key={movie.tmdbId}>
+            <img
+              alt={`${movie.title} poster`}
+              loading="lazy"
+              src={`/movie-posters/${movie.tmdbId}.jpg`}
+              onError={(event) => { event.currentTarget.classList.add("poster-missing"); }}
+            />
+            <div className="show-meta">
+              <time dateTime={movie.addedOn ?? undefined}>{movie.year ?? "Unknown year"}</time>
+              <h2>{movie.title}</h2>
+              {movie.rating === null ? <span className="not-rated">Not rated</span> : <Rating value={movie.rating} />}
+            </div>
+          </article>
+        ))}
+      </section>
+    </main>
+  );
+}
+
 function BookshelfPage() {
   const [sort, setSort] = useState<"chronology" | "rating">("chronology");
   const [direction, setDirection] = useState<"asc" | "desc">("asc");
@@ -261,6 +317,7 @@ function App() {
   }, []);
 
   if (page === "#tv") return <TvPage />;
+  if (page === "#plex") return <PlexPage />;
   if (page === "#books") return <BookshelfPage />;
 
   return (
@@ -282,11 +339,14 @@ function App() {
         >
           ./linkedin
         </a>
-        <a href="https://letterboxd.com/nicktsmitw/" target="_blank" rel="noreferrer">
+        <a href="https://letterboxd.com/nicktsmitw/films/by/rating/" target="_blank" rel="noreferrer">
           ./films
         </a>
         <a href="#tv">
           ./tv
+        </a>
+        <a href="#plex">
+          ./plex
         </a>
         <a href="#books">
           ./books

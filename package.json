@@ -9,6 +9,7 @@
     "preview": "vite preview --host 127.0.0.1",
     "tv:rate": "node scripts/tv-rate.mjs",
     "tv:publish": "git add src/tvData.ts && git commit -m \"Update TV diary ratings\" && git push origin main && npm run deploy",
+    "radarr:sync": "node scripts/sync-radarr.mjs",
     "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
